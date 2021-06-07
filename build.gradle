@@ -10,6 +10,10 @@ buildscript {
     ext.mockitoVersion = '1.10.19'
     ext.mockitoCoreVersion = '3.4.4'
     ext.powerMockVersion = '1.6.6'
+    ext.coroutines_test = "1.5.0"
+    ext.mock_retrofit = "4.6.0"
+    ext.mockito_kotlin_nhaarman = "2.2.0"
+    ext.mockito_kotlin = "3.2.0"
     repositories {
         google()
         jcenter()
