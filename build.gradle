@@ -7,6 +7,9 @@ buildscript {
     ext.retrofit_version = "2.9.0"
     ext.interceptor_version = "4.9.1"
     ext.glide_version = "4.12.0"
+    ext.mockitoVersion = '1.10.19'
+    ext.mockitoCoreVersion = '3.4.4'
+    ext.powerMockVersion = '1.6.6'
     repositories {
         google()
         jcenter()

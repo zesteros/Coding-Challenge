@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.angelo.codingchallenge.R
 import com.angelo.codingchallenge.databinding.ActivityMainBinding
-import com.angelo.codingchallenge.domain.repository.PageRepository
 import com.angelo.codingchallenge.presentation.di.Injector
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
@@ -24,22 +24,34 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: MainViewModelFactory
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var adapter: CardAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.toolbar))
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         (application as Injector).createPageSubcomponent().inject(this)
         mainViewModel =  ViewModelProvider(this, factory).get(MainViewModel::class.java)
+
+        initRecyclerView()
+    }
+
+    fun initRecyclerView(){
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = CardAdapter()
+        binding.recyclerView.adapter = adapter
+        displayPage()
+    }
+
+    fun displayPage(){
         val responsePageLiveData =  mainViewModel.getPage()
         responsePageLiveData.observe(this, Observer {
-            Log.i(TAG, "onCreate: $it")
+            Log.i(TAG, "displayPage: $it")
+            it?.let {
+                adapter.setList(it.cards)
+                adapter.notifyDataSetChanged()
+            }
         })
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -24,6 +24,8 @@ class PageRepositoryImpl(
             page = body?.page ?: getPageFromCache()
         } catch (exception: Exception) {
             Log.i(TAG, exception.message.toString())
+            exception.printStackTrace()
+            page = Page(listOf())
         }
         return page
     }
@@ -41,6 +43,7 @@ class PageRepositoryImpl(
             }
         } catch (exception: Exception) {
             Log.i(TAG, exception.message.toString())
+            page = Page(listOf())
         }
         return page
     }
